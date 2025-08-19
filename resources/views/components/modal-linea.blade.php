@@ -81,6 +81,7 @@ $(document).ready(function() {
         /*let interval = setInterval(function() {
             actualizarModal({{ $linea->paletizadora }});
         }, 10000);*/
+        let interval = 10000; // 10 segundos
 
         // Limpiar intervalo al cerrar la modal
         $(this).on('hidden.bs.modal', function () {
