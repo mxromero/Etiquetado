@@ -78,9 +78,9 @@ $(document).ready(function() {
         actualizarModal({{ $linea->paletizadora }});
 
         // Opcional: si quieres que siga actualizándose mientras esté abierta
-        let interval = setInterval(function() {
+        /*let interval = setInterval(function() {
             actualizarModal({{ $linea->paletizadora }});
-        }, 10000);
+        }, 10000);*/
 
         // Limpiar intervalo al cerrar la modal
         $(this).on('hidden.bs.modal', function () {
