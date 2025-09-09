@@ -27,7 +27,6 @@
                         <i class="bi bi-printer-fill text-info"></i>
                         {{ $linea->impresora_alias ?? '-' }}
                     </p>
-
                     <!-- Estado visual -->
                     <span class="badge {{ strtolower($linea->eliminada) === ' ' ? 'bg-success' : 'bg-secondary' }}">
                         {{ strtolower($linea->eliminada) === ' ' ? 'Activa' : 'Inactiva' }}
