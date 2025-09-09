@@ -32,8 +32,8 @@
         </h2>
         <div class="accordion-collapse collapse show">
             <div class="accordion-body p-0">
-                <a href="/home">🏠 Inicio</a>
-                <a href="/perfil">👤 Perfil</a>
+                <a href="{{ route('home')}}">🏠 Inicio</a>
+                <a href="{{ route('perfil')}}">👤 Perfil</a>
             </div>
         </div>
     </div>
@@ -47,11 +47,12 @@
         </h2>
         <div id="collapseProduccion" class="accordion-collapse collapse show" data-bs-parent="#menuAccordion">
             <div class="accordion-body p-0">
-                <a href="/impresoras">🖨️ Impresoras</a>
-                <a href="/configuracion">📥 Cargar Orden Previsional</a>
-                <a href="/vaciados">📦 Vaciado a Línea</a>
-                <a href="/notificaciones">🔔 Notificación Producción</a>
-                <a href="/fuera-norma">⚠️ Fuera Norma</a>
+                <a href="{{ route('impresoras.index') }}">🖨️ Impresoras</a>
+                <a href="{{ route('configuracion.index') }}">📥 Cargar Orden Previsional</a>
+                <a href="{{ route('vaciados.index') }}">📦 Vaciado a Línea</a>
+                <a href="{{ route('notificaciones.index') }}">🔔 Notificación Producción</a>
+                <a href="{{ route('fuera-norma.index') }}">⚠️ Fuera Norma</a>
+                <a href="{{ route('modificacion-masiva.index') }}">🛠️ Modificación Masiva</a>
             </div>
         </div>
     </div>
@@ -66,8 +67,8 @@
         </h2>
         <div id="collapseReportes" class="accordion-collapse collapse show" data-bs-parent="#menuAccordion">
             <div class="accordion-body p-0">
-                <a href="/trazabilidad">🔍 Reporte Consumo</a>
-                <a href="/reporteDia">📅 Reporte Diario</a>
+                <a href="{{ route('reporteDia.trazabilidad')}}">🔍 Reporte Consumo</a>
+                <a href="{{ route('reporteDia.index')}}">📅 Reporte Diario</a>
                 <a href="{{ route('reportes.vaciado_produccion') }}">🏭 Reporte Prod. Vaciado</a>
                 <p><a href="#" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">♻️ Recuperación Umas</a></p>
             </div>
@@ -84,10 +85,10 @@
         </h2>
         <div id="collapseConfig" class="accordion-collapse collapse show" data-bs-parent="#menuAccordion">
             <div class="accordion-body p-0">
-                <a href="/configuracion/usuarios">👥 Usuarios</a>
-                <a href="/configuracion/rol">🔑 Roles</a>
-                <a href="/configuracion/permisos">🛡️ Permisos</a>
-                <a href="/configuracion/lineas">➕ Agregar Nuevas Líneas</a>
+                <a href="{{ route('configuracion.usuarios') }}">👥 Usuarios</a>
+                <a href="{{ route('configuracion.rol') }}">🔑 Roles</a>
+                <a href="{{ route('configuracion.permisos') }}">🛡️ Permisos</a>
+                <a href="{{ route('configuracion.lineas') }}">➕ Agregar Nuevas Líneas</a>
             </div>
         </div>
     </div>

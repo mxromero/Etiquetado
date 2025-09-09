@@ -177,13 +177,13 @@
                         <td>${row.paletizadora}</td>
                         <td>${badgeSAP}</td>
                         <td>
-                            <button class="btn btn-sm btn-outline-primary" title="Ver" onclick="verDetalle(${row.uma})">
+                            <button class="btn btn-sm btn-outline-primary" title="Ver" onclick="verDetalle(${uma})">
                                 <i class="fas fa-eye"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-success" title="Imprimir" onclick="imprimir(${row.uma})">
+                            <button class="btn btn-sm btn-outline-success" title="Imprimir" onclick="imprimir(${uma})">
                                 <i class="fas fa-print"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminar(${row.uma})">
+                            <button class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="eliminar(${uma})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>

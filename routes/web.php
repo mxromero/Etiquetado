@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ControllerImpresoras;
+use App\Http\Controllers\ControllerModificacionMasiva;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -75,7 +76,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/configuracion/lineas/{id}', [App\Http\Controllers\ConfiguracionController::class, 'deleteLinea'])->name('configuracion.delete.linea');
 
     Route::resource('impresoras', ControllerImpresoras::class);
-    Route::post('/impresoras/aplicar-impresora', [ControllerImpresoras::class, 'aplicarImpresora'])->name('impresoras.aplicarImpresora');
+    Route::post('/accion/aplicar', [ControllerImpresoras::class, 'aplicarImpresora'])->name('impresoras.aplicarImpresora');
 
 
 
@@ -128,6 +129,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/trazabilidad/consumos', [App\Http\Controllers\ControllerReporteConsumo::class, 'filtrar'])->name('reportes.consumos');
     Route::get('/vaciado/produccion', [App\Http\Controllers\ControllerReporteVaciProd::class, 'index'])->name('reportes.vaciado_produccion');
     Route::get('/vaciado/produccion/filtro', [App\Http\Controllers\ControllerReporteVaciProd::class, 'filtrar'])->name('reportes.vaciado_produccion.filtrar');
+    Route::get('/modificacion-masiva', [App\Http\Controllers\ControllerModificacionMasiva::class, 'index'])->name('modificacion-masiva.index');
+    Route::get('/buscar-registros/{mes}/{material}/{orden}', [ControllerModificacionMasiva::class, 'buscarRegistros']);
+    Route::post('/produccion/update-masivo', [ControllerModificacionMasiva::class, 'updateMasivo'])->name('produccion.updateMasivo');
+    Route::get('/buscar-registros/{mes}/{material}/{orden}', [ControllerModificacionMasiva::class, 'buscarRegistros']);
 });
 
 

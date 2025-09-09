@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ModelsImpresoras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,22 +31,61 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // 1️⃣ Traer todas las líneas activas
         $lineas = ModelsPaletizadoras::where('paletizadora', '!=', '0')
-                                                ->where('eliminada', '!=', 'X')
-                                                ->orderBy('paletizadora', 'asc')
-                                                ->get();
+            ->where('eliminada', '!=', 'X')
+            ->orderBy('paletizadora', 'asc')
+            ->get();
 
-        // 1️⃣ Obtener todos los registros relevantes de producción de una sola vez
-        $producciones = ModelsProduccion::whereIn('paletizadora', $lineas->pluck('paletizadora'))
-            ->where('exp_sap', '')
-            ->get(['paletizadora', 'material', 'NordPrev']);
+        // 2️⃣ Hacer un conteo agrupado en la base de datos
+        $producciones = ModelsProduccion::select(
+                'paletizadora',
+                'material',
+                'NordPrev',
+                \DB::raw('COUNT(*) as total')
+            )
+            ->whereIn('paletizadora', $lineas->pluck('paletizadora'))
+            ->whereIn('NordPrev', $lineas->pluck('NordPrev'))
+            ->where(function ($q) {
+                $q->whereNull('exp_sap')
+                ->orWhere('exp_sap', '');
+            })
+            ->groupBy('paletizadora', 'material', 'NordPrev')
+            ->get();
 
-        // 2️⃣ Contar cuántos registros hay para cada línea
+
+
+        // 3️⃣ Mapear los conteos a cada línea
         foreach ($lineas as $linea) {
-            $linea->exp_sap = $producciones->where('paletizadora', $linea->paletizadora)
+            $linea->exp_sap = $producciones
+                ->where('paletizadora', $linea->paletizadora)
                 ->where('material', $linea->material)
                 ->where('NordPrev', $linea->NordPrev)
-                ->count(); // Si no hay registros, asignar 0
+                ->pluck('total')
+                ->first() ?? 0;
+           $impresora = ModelsImpresoras::where('paletizadora', $linea->paletizadora)
+                ->where('activa', '=', 'X')
+                ->pluck('impresora')
+                ->first();
+
+            if ($impresora) {
+                // Limpiar la barra y quitar IP
+                $nombre = trim($impresora); // quitar espacios
+                $nombre = str_replace('\\\\', '\\', $nombre); // normalizar barras
+
+                // Obtener solo la parte después de la última barra
+                $partes = explode('\\', $nombre);
+                $alias = end($partes); // devuelve 'Linea1-2'
+
+                // Agregar texto descriptivo
+                $linea->impresora_alias = 'Impresora ' . $alias;
+
+                // Mantener también la ruta completa limpia
+                $linea->impresora = '\\' . ltrim($nombre, '\\');
+            } else {
+                $linea->impresora_alias = null;
+                $linea->impresora = null;
+            }
         }
 
 
@@ -86,6 +126,29 @@ class HomeController extends Controller
                 ->where('material', $linea->material)
                 ->where('NordPrev', $linea->NordPrev)
                 ->count();
+            $impresora = ModelsImpresoras::where('paletizadora', $linea->paletizadora)
+                ->where('activa', '=', 'X')
+                ->pluck('impresora')
+                ->first();
+
+                if ($impresora) {
+                    // Limpiar la barra y quitar IP
+                    $nombre = trim($impresora); // quitar espacios
+                    $nombre = str_replace('\\\\', '\\', $nombre); // normalizar barras
+
+                    // Obtener solo la parte después de la última barra
+                    $partes = explode('\\', $nombre);
+                    $alias = end($partes); // devuelve 'Linea1-2'
+
+                    // Agregar texto descriptivo
+                    $linea->impresora_alias = 'Impresora ' . $alias;
+
+                    // Mantener también la ruta completa limpia
+                    $linea->impresora = '\\' . ltrim($nombre, '\\');
+                } else {
+                    $linea->impresora_alias = null;
+                    $linea->impresora = null;
+                }
         }
 
         return view('partials.lineas_cards', compact('lineas'));

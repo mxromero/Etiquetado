@@ -27,10 +27,7 @@
                 <i class="fa fa-home" aria-hidden="true"></i>&nbsp;<strong>Versión Fabricación</strong> : {{ ltrim($linea->VersionF,'0') }}<br>
                 <i class="fa fa-map" aria-hidden="true"></i>&nbsp;<strong>Material Orden</strong> : {{ ltrim($linea->material_orden,'0') }}<br>
                 <i class="fa fa-map" aria-hidden="true"></i>&nbsp;<strong>Lote Vaciado</strong> : {{ ltrim($linea->lote_vac,'0') }}<br>
-                <i class="fa-solid fa-file-export"></i>&nbsp;<strong>No Exportado SAP</strong> :
-                <span class="{{ $linea->exp_sap > 0 ? 'text-danger fw-bold' : '' }}">
-                    {{ $linea->exp_sap }}
-                </span><br>
+
             </div>
 
             <div class="modal-footer" style="background-color: #d0e0fd">
@@ -56,8 +53,6 @@ $(document).ready(function() {
                     <i class="fa fa-home"></i>&nbsp;<strong>Versión Fabricación</strong> : ${data.VersionF}<br>
                     <i class="fa fa-map"></i>&nbsp;<strong>Material Orden</strong> : ${data.material_orden}<br>
                     <i class="fa fa-map"></i>&nbsp;<strong>Lote Vaciado</strong> : ${data.lote_vac}<br>
-                    <i class="fa-solid fa-file-export"></i>&nbsp;<strong>No Exportado SAP</strong> :
-                    <span class="${data.exp_sap > 0 ? 'text-danger fw-bold' : ''}">${data.exp_sap}</span><br>
                 `;
                 $('#modalLinea' + paletizadoraId + ' .modal-body').html(bodyHtml);
 
